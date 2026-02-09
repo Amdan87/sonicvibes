@@ -62,28 +62,30 @@ async function updateAgent(agentName, config) {
             throw new Error('Could not find next section "persona:" in ' + config.filePath);
         }
 
-        // Indent the new prompt
-        const indentedRandomPrompt = newPrompt.split('\n').map(line => '    ' + line).join('\n');
+        // Indent the new prompt (preserve empty lines)
+        const indentedRandomPrompt = newPrompt
+            .split('\n')
+            .map((line) => (line.trim().length === 0 ? '' : `    ${line}`))
+            .join('\n');
 
         const newFileContent =
             fileContent.substring(0, startIndex + customizationMarker.length) +
-            '\n' + indentedRandomPrompt + '\n' +
+            '\n' + indentedRandomPrompt +
             fileContent.substring(endIndex);
 
         fs.writeFileSync(config.filePath, newFileContent, 'utf8');
         console.log(`[${agentName}] Successfully updated prompt!`);
+        return true;
 
     } catch (error) {
-        console.warn(
-            `[${agentName}] Warning: Failed to fetch prompt (${error.message}). Continuing without update.`
-        );
+        console.error(`[${agentName}] Error:`, error.message);
         return false;
     }
 }
 
 async function main() {
-    await updateAgent('analyst', CONFIG.analyst);
-    process.exit(0);
+    const analystOk = await updateAgent('analyst', CONFIG.analyst);
+    process.exit(analystOk ? 0 : 1);
 }
 
 main();
