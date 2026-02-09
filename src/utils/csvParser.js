@@ -120,6 +120,7 @@ export function normalizeColumnNames(data) {
     const columnMap = {
         'level number': 'Level Number',
         'level': 'Level Number',
+        'sw_main_level': 'Level Number',
         'number of users': 'Number of Users',
         'users': 'Number of Users',
         'aps': 'APS',
@@ -131,6 +132,7 @@ export function normalizeColumnNames(data) {
         'churn': 'Churn',
         'churn rate': 'Churn',
         'arpu': 'ARPU',
+        'arpul': 'ARPU',
         'revenue': 'ARPU'
     };
 
