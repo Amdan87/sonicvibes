@@ -127,7 +127,9 @@ body {
 }
 
 .chart-svg {
-    display: block;
+    margin-top: 20px;
+    padding-top: 20px;
+    overflow: visible;
 }
 
 .legend {
