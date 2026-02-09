@@ -65,7 +65,10 @@ async function updateAgent(agentName, config) {
         // Indent the new prompt (preserve empty lines)
         const indentedRandomPrompt = newPrompt
             .split('\n')
-            .map((line) => (line.trim().length === 0 ? '' : `    ${line}`))
+            .map((line) => {
+                const trimmed = line.trim();
+                return trimmed.length === 0 ? '' : `    ${trimmed}`;
+            })
             .join('\n');
 
         const newFileContent =

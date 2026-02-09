@@ -275,6 +275,7 @@ function App() {
                 };
 
                 const isEasy = (level.success ?? 0) >= 95 && (level.far ?? 0) >= 85 && (level.aps ?? 0) <= 1.3;
+                const previousEasyStreak = easyStreak;
                 easyStreak = isEasy ? easyStreak + 1 : 0;
 
                 if (model === 'Fast Burn / Fast Revenue') {
@@ -310,10 +311,10 @@ function App() {
                         }
                     }
                 } else {
-                    if (easyStreak >= 6) {
+                    if (!isEasy && previousEasyStreak >= 6) {
                         addIssue(
                             'Missing soft pinch in staircase',
-                            'Introduce a soft pinch (minor difficulty bump) at this level.',
+                            'Introduce a soft pinch (minor difficulty bump) at this level following the easy streak.',
                             'Convert non-payers without mass churn.'
                         );
                     }
