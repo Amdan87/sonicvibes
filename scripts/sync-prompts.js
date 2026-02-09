@@ -35,6 +35,9 @@ async function updateAgent(agentName, config) {
 
     try {
         const newPrompt = await fetchContent(config.url);
+        if (!newPrompt || newPrompt.trim().length === 0) {
+            throw new Error('Empty prompt content');
+        }
 
         let fileContent = fs.readFileSync(config.filePath, 'utf8');
 

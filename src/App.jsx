@@ -6,7 +6,39 @@ function App() {
     const [error, setError] = useState('');
 
     const parseCsv = (text) => {
-        const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
+        const splitCsvLines = (input) => {
+            const lines = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < input.length; i += 1) {
+                const char = input[i];
+                if (char === '"') {
+                    if (inQuotes && input[i + 1] === '"') {
+                        current += '"';
+                        i += 1;
+                    } else {
+                        inQuotes = !inQuotes;
+                        current += char;
+                    }
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                    if (char === '\r' && input[i + 1] === '\n') {
+                        i += 1;
+                    }
+                    if (current.trim().length > 0) {
+                        lines.push(current);
+                    }
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            if (current.trim().length > 0) {
+                lines.push(current);
+            }
+            return lines;
+        };
+
+        const lines = splitCsvLines(text);
         let startIndex = 0;
         if (lines[0] && lines[0].trim().toLowerCase() === 'table 1') {
             startIndex = 1;
@@ -152,7 +184,7 @@ function App() {
 
             const far = row.far ?? 0;
             const success = row.success ?? 0;
-            const insufficient = row.users != null && row.users < 300;
+            const insufficient = row.users == null || row.users < 300;
 
             let difficulty = 'Tuned';
             if (insufficient) {
