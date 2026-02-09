@@ -33,32 +33,40 @@ function BarChart({ data = [], height = 'h-[256px]', unit = '', unitPrefix = '' 
                 <span>0{unit}</span>
             </div>
 
-            <div
-                className="bar-chart-container ml-6"
-                style={{ height: '256px', borderLeft: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
-            >
-                {data.map((item, index) => {
-                    const heightPercent = maxValue > 0 ? Math.max((item.value / maxValue) * 100, 1) : 0;
-                    return (
-                        <div
-                            key={index}
-                            className="data-bar hover:bg-industrial-orange transition-colors"
-                            style={{
-                                height: `${heightPercent}%`,
-                                minHeight: '2px'
-                            }}
-                            onMouseMove={(e) => handleMouseMove(e, item)}
-                            onMouseLeave={() => setHoveredItem(null)}
-                        ></div>
-                    );
-                })}
-            </div>
+            <div className="overflow-x-auto custom-scrollbar pb-2">
+                <div
+                    className="bar-chart-container ml-6"
+                    style={{
+                        height: '256px',
+                        borderLeft: '1px solid rgba(255,255,255,0.1)',
+                        borderBottom: '1px solid rgba(255,255,255,0.1)',
+                        minWidth: data.length > 20 ? `${data.length * 12}px` : '100%'
+                    }}
+                >
+                    {data.map((item, index) => {
+                        const heightPercent = maxValue > 0 ? Math.max((item.value / maxValue) * 100, 1) : 0;
+                        return (
+                            <div
+                                key={index}
+                                className="data-bar hover:bg-industrial-orange transition-colors"
+                                style={{
+                                    height: `${heightPercent}%`,
+                                    minHeight: '2px',
+                                    minWidth: '8px'
+                                }}
+                                onMouseMove={(e) => handleMouseMove(e, item)}
+                                onMouseLeave={() => setHoveredItem(null)}
+                            ></div>
+                        );
+                    })}
+                </div>
 
-            {/* X-Axis Labels */}
-            <div className="flex justify-between items-start mt-2 ml-6 text-[10px] text-slate-500 font-mono">
-                <span>LVL {data[0]?.level}</span>
-                <span>LVL {data[Math.floor(data.length / 2)]?.level}</span>
-                <span>LVL {data[data.length - 1]?.level}</span>
+                {/* X-Axis Labels */}
+                <div className="flex justify-between items-start mt-2 ml-6 text-[10px] text-slate-500 font-mono" style={{ minWidth: data.length > 20 ? `${data.length * 12}px` : '100%' }}>
+                    <span>LVL {data[0]?.level}</span>
+                    <span>LVL {data[Math.floor(data.length / 2)]?.level}</span>
+                    <span>LVL {data[data.length - 1]?.level}</span>
+                </div>
             </div>
 
             {/* Custom Tooltip */}

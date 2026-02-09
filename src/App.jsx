@@ -4,6 +4,7 @@ import { Footer } from './components/Footer';
 import { AiCorePanel } from './components/AiCorePanel';
 import { TelemetrySection } from './components/TelemetrySection';
 import { DeepDiveModule } from './components/DeepDiveModule';
+import { HeatChartTable } from './components/HeatChartTable';
 import { useAppStore } from './stores/useAppStore';
 
 function App() {
@@ -40,6 +41,9 @@ function App() {
 
                 {/* Deep Dive Module */}
                 <DeepDiveModule />
+
+                {/* Heat Chart Table */}
+                <HeatChartTable />
             </main>
 
             {/* Footer */}

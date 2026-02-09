@@ -51,36 +51,44 @@ function BarChart({ data = [], guideLine = null, height = 'h-64', unit = '' }) {
                 <span>0{unit}</span>
             </div>
 
-            <div
-                className="bar-chart-container ml-2"
-                style={{ height: '256px', borderLeft: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
-            >
-                {guideLine && maxValue > 0 && (
-                    <div className="guide-line" style={{ top: `${100 - (guideLine / maxValue * 100)}%` }}></div>
-                )}
+            <div className="overflow-x-auto custom-scrollbar pb-2">
+                <div
+                    className="bar-chart-container ml-2"
+                    style={{
+                        height: '256px',
+                        borderLeft: '1px solid rgba(255,255,255,0.1)',
+                        borderBottom: '1px solid rgba(255,255,255,0.1)',
+                        minWidth: displayData.length > 20 ? `${displayData.length * 12}px` : '100%'
+                    }}
+                >
+                    {guideLine && maxValue > 0 && (
+                        <div className="guide-line" style={{ top: `${100 - (guideLine / maxValue * 100)}%` }}></div>
+                    )}
 
-                {displayData.map((item, index) => {
-                    const heightPercent = maxValue > 0 ? Math.max((item.value / maxValue) * 100, 1) : 0;
-                    return (
-                        <div
-                            key={index}
-                            className="data-bar hover:bg-industrial-orange transition-colors"
-                            style={{
-                                height: `${heightPercent}%`,
-                                minHeight: '2px'
-                            }}
-                            onMouseMove={(e) => handleMouseMove(e, item)}
-                            onMouseLeave={() => setHoveredItem(null)}
-                        ></div>
-                    );
-                })}
-            </div>
+                    {displayData.map((item, index) => {
+                        const heightPercent = maxValue > 0 ? Math.max((item.value / maxValue) * 100, 1) : 0;
+                        return (
+                            <div
+                                key={index}
+                                className="data-bar hover:bg-industrial-orange transition-colors"
+                                style={{
+                                    height: `${heightPercent}%`,
+                                    minHeight: '2px',
+                                    minWidth: '8px'
+                                }}
+                                onMouseMove={(e) => handleMouseMove(e, item)}
+                                onMouseLeave={() => setHoveredItem(null)}
+                            ></div>
+                        );
+                    })}
+                </div>
 
-            {/* X-Axis Labels */}
-            <div className="flex justify-between items-start mt-2 ml-2 text-[10px] text-slate-500 font-mono">
-                <span>LVL {displayData[0]?.level}</span>
-                <span>LVL {displayData[Math.floor(displayData.length / 2)]?.level}</span>
-                <span>LVL {displayData[displayData.length - 1]?.level}</span>
+                {/* X-Axis Labels */}
+                <div className="flex justify-between items-start mt-2 ml-2 text-[10px] text-slate-500 font-mono" style={{ minWidth: displayData.length > 20 ? `${displayData.length * 12}px` : '100%' }}>
+                    <span>LVL {displayData[0]?.level}</span>
+                    <span>LVL {displayData[Math.floor(displayData.length / 2)]?.level}</span>
+                    <span>LVL {displayData[displayData.length - 1]?.level}</span>
+                </div>
             </div>
 
             {/* Custom Tooltip */}
