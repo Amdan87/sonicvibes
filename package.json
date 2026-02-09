@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run sync-prompts && vite",
+    "dev": "npm run sync-prompts && vite --host 127.0.0.1 --port 5173",
     "build": "vite build",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",

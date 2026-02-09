@@ -74,13 +74,16 @@ async function updateAgent(agentName, config) {
         console.log(`[${agentName}] Successfully updated prompt!`);
 
     } catch (error) {
-        console.error(`[${agentName}] Error:`, error.message);
-        process.exit(1);
+        console.warn(
+            `[${agentName}] Warning: Failed to fetch prompt (${error.message}). Continuing without update.`
+        );
+        return false;
     }
 }
 
 async function main() {
     await updateAgent('analyst', CONFIG.analyst);
+    process.exit(0);
 }
 
 main();
