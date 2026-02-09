@@ -27,10 +27,19 @@ export function parseCSV(csvText) {
         const row = {};
 
         headers.forEach((header, index) => {
-            const value = values[index] || '';
-            // Try to convert to number
-            const numValue = parseFloat(value);
-            row[header.trim()] = isNaN(numValue) ? value.trim() : numValue;
+            const rawValue = (values[index] || '').trim();
+            // Try to convert to number, stripping commas first
+            const cleanValue = rawValue.replace(/,/g, '');
+            const numValue = parseFloat(cleanValue);
+
+            // Only use numeric value if the resulting string matches (to avoid parsing things like "Version 1.2" as 1.2)
+            // but for commas we specifically want to handle them.
+            // If the cleaned value is a valid number and not empty, use it.
+            if (cleanValue !== '' && !isNaN(numValue) && /^-?\d*\.?\d+$/.test(cleanValue)) {
+                row[header.trim()] = numValue;
+            } else {
+                row[header.trim()] = rawValue;
+            }
         });
 
         data.push(row);
