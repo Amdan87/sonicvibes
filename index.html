@@ -1,14 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SonicVibes</title>
-    <meta name="description" content="AI-powered audio experiences built with SonicVibes" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html class="dark" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supersonic ALFA | AI Level Funnel Analyzer</title>
+  <meta name="description" content="Precision analytics tool for mobile game level funnel optimization" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "cyber-bg": "#262626",
+            "cyber-panel": "#1a1a1a",
+            "industrial-orange": "#f97316",
+            "industrial-yellow": "#eab308",
+            "terminal-grey": "#525252",
+            "benchmark": "#4b5563"
+          },
+          fontFamily: {
+            "heading": ["VT323", "monospace"],
+            "mono": ["Share Tech Mono", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
